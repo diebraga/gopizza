@@ -8,6 +8,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { SignIn } from './src/screens/SignIn/SignIn';
 import { StatusBar } from 'expo-status-bar';
+import { AuthProvider } from './src/hooks/useAuth';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -43,7 +44,9 @@ export default function App() {
     <View onLayout={onLayout} style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
         <StatusBar style='light' translucent backgroundColor='transparent' />
-        <SignIn />
+        <AuthProvider>
+          <SignIn />
+        </AuthProvider>
       </ThemeProvider>
     </View>
   );
