@@ -20,6 +20,8 @@ type AuthContexData = {
   signInIsLoading: boolean
   signIn: (email: string, password: string) => Promise<void>
   user: User | null
+  signOut: () => Promise<void>
+  forgotPassword: (email: string) => Promise<void>
 }
 
 type AuthProviderProps = {
@@ -61,7 +63,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
               setUser(user)
             }
           })
-          .finally(() => Alert.alert("SignIn", "Sign in has failed"))
       })
       .catch(err => {
         const { code } = err;
@@ -75,7 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       .finally(() => setSignInIsLoading(false))
   }
 
-  const loadUserStoredDate = async () => {
+  const loadUserStoredData = async () => {
     setSignInIsLoading(true)
 
     const storedUser = await AsyncStorage.getItem(USER_COLLECTION)
@@ -89,15 +90,37 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setSignInIsLoading(false)
   }
 
+  const signOut = async () => {
+    await auth().signOut()
+    await AsyncStorage.removeItem(USER_COLLECTION)
+    setUser(null)
+  }
+
+  const forgotPassword = async (email: string) => {
+    if (!email) {
+      return Alert.alert("Redefine password", "Insert your email")
+    }
+
+    auth()
+    .sendPasswordResetEmail(email)
+    .then(() => Alert.alert("Redefine password", `An email has been sent to ${email}`))
+    .catch((err) => {
+      console.log(err)
+      return Alert.alert("Redefine password", `Error sending email`)
+    })
+  }
+
   useEffect(() => {
-    loadUserStoredDate()
+    loadUserStoredData()
   }, [])
-  
+
   return (
     <AuthContext.Provider value={{
       signInIsLoading,
       signIn,
-      user
+      user,
+      signOut,
+      forgotPassword
     }}>
       {children}
     </AuthContext.Provider>

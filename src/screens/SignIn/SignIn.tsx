@@ -9,12 +9,19 @@ import { Container, Content, Title, Brand, ForgotPasswordButton, ForgotPasswordL
 import { useAuth } from '../../hooks/useAuth';
 
 export const SignIn: React.FC = () => {
-  const { signIn, signInIsLoading } = useAuth()
+  const { signIn, signInIsLoading, signOut, forgotPassword } = useAuth()
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-  
+
+  const [isForgotPasswordactive, setIsFogotPasswordActive] = useState(false)
+
   const handleOnPress = () => {
-    signIn(email, password)
+    if (isForgotPasswordactive) {
+      forgotPassword(email)
+      setIsFogotPasswordActive(false)
+    } else {
+      signIn(email, password)
+    }
   }
 
   return (
@@ -23,7 +30,7 @@ export const SignIn: React.FC = () => {
         <Content>
 
           <Brand source={BandImg} />
-          <Title>SignIn</Title>
+          <Title>{isForgotPasswordactive ? "Redefine password" : "SignIn"}</Title>
           <Input
             type='secondary'
             placeholder='email'
@@ -31,14 +38,16 @@ export const SignIn: React.FC = () => {
             autoCapitalize='none'
             onChangeText={setEmail}
           />
-          <Input
-            type='secondary'
-            placeholder='password'
-            secureTextEntry
-            onChangeText={setPassword}
-          />
-          <ForgotPasswordButton>
-            <ForgotPasswordLabel>I Forgot my password</ForgotPasswordLabel>
+          {!isForgotPasswordactive && (
+            <Input
+              type='secondary'
+              placeholder='password'
+              secureTextEntry
+              onChangeText={setPassword}
+            />
+          )}
+          <ForgotPasswordButton onPress={() => setIsFogotPasswordActive(state => !state)}>
+            <ForgotPasswordLabel>{isForgotPasswordactive ? "Cancel" : "I Forgot my password"}</ForgotPasswordLabel>
           </ForgotPasswordButton>
           <Button
             title='Login'
