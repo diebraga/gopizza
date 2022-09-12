@@ -7,6 +7,7 @@ import { Text, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { SignIn } from './src/screens/SignIn/SignIn';
+import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,6 +42,7 @@ export default function App() {
   return (
     <View onLayout={onLayout} style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
+        <StatusBar style='light' translucent backgroundColor='transparent' />
         <SignIn />
       </ThemeProvider>
     </View>
