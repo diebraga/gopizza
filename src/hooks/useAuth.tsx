@@ -2,11 +2,13 @@ import React, {
   createContext,
   useContext,
   useState,
-  ReactNode
+  ReactNode,
+  useEffect
 } from 'react';
 import { Alert } from "react-native"
 import auth from "@react-native-firebase/auth"
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type User = {
   id: string
@@ -23,6 +25,8 @@ type AuthContexData = {
 type AuthProviderProps = {
   children?: ReactNode
 }
+
+const USER_COLLECTION = "@gopizza:users"
 
 export const AuthContext = createContext({} as AuthContexData)
 
@@ -44,15 +48,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           .doc(account.user.uid)
           .get()
           .then()
-          .then(profile => {
+          .then(async (profile) => {
             const { Name, isAdmin } = profile.data() as User
 
             if (profile.exists) {
-              setUser({
+              const user = {
                 id: account.user.uid,
                 Name,
                 isAdmin
-              })
+              }
+              await AsyncStorage.setItem(USER_COLLECTION, JSON.stringify(user))
+              setUser(user)
             }
           })
           .finally(() => Alert.alert("SignIn", "Sign in has failed"))
@@ -68,6 +74,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       })
       .finally(() => setSignInIsLoading(false))
   }
+
+  const loadUserStoredDate = async () => {
+    setSignInIsLoading(true)
+
+    const storedUser = await AsyncStorage.getItem(USER_COLLECTION)
+
+    if (storedUser) {
+      const userData = JSON.parse(storedUser) as User
+      console.log(userData)
+      setUser(userData)
+    }
+
+    setSignInIsLoading(false)
+  }
+
+  useEffect(() => {
+    loadUserStoredDate()
+  }, [])
+  
   return (
     <AuthContext.Provider value={{
       signInIsLoading,
