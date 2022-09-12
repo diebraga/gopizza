@@ -1,6 +1,5 @@
 import { TextInput } from "react-native";
 import styled from "styled-components/native";
-import theme from "../../theme";
 
 export type InputProps = "primary" | "secondary"
 
@@ -12,10 +11,10 @@ export const Container = styled(TextInput).attrs<Props>(p => ({
   placeholderTextColor: p.type === "primary" ? p.theme.COLORS.SECONDARY_900 : p.theme.COLORS.PRIMARY_50,
 })) <Props>`
   width: 100%;
-  height: 56;
+  height: 56px;
   background-color: transparent;
   border-radius: 12px;
-  font-size: 14;
+  font-size: 14px;
   padding: 7px 0;
   padding-left: 20px;
   margin-bottom: 16px;

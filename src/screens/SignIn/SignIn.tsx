@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 
 import { Container } from './styles';
@@ -17,6 +17,11 @@ export const SignIn: React.FC = () => {
         type='secondary'
         placeholder='password'
         secureTextEntry
+      />
+      <Button
+        title='Login'
+        isLoading={false}
+        type='secondary'
       />
     </Container>
   )
