@@ -22,6 +22,9 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+ios/
+.plist
+GoogleService-Info.plist
 # Android/IntelliJ
 #
 build/
@@ -53,3 +56,4 @@ buck-out/
 .expo/
 web-build/
 dist/
+
