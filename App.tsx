@@ -1,9 +1,9 @@
 import React from 'react';
 import { DMSans_400Regular, useFonts } from "@expo-google-fonts/dm-sans";
 import { DMSerifDisplay_400Regular } from "@expo-google-fonts/dm-serif-display";
-import AppLoading from "expo-app-loading";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/theme";
+import { Text, View } from 'react-native';
 
 export default function App() {
   const [isFontLoaded] = useFonts({
@@ -11,13 +11,13 @@ export default function App() {
     DMSerifDisplay_400Regular
   })
 
-  if (!isFontLoaded) {
-    return <AppLoading />
-  }
-
   return (
     <ThemeProvider theme={theme}>
-
+      <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+        <Text>
+          Hello World
+        </Text>
+      </View>
     </ThemeProvider>
   );
 }
