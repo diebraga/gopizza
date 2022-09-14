@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
 import ButtonBack from '../../components/ButtonBack/ButtonBack';
+import { Photo } from '../../components/Photo/Photo';
 
 import { Container, Title, Header, DeleteLabel } from './styles';
 
@@ -17,6 +18,8 @@ const Product: React.FC = () => {
           </DeleteLabel>
         </TouchableOpacity>
       </Header>
+
+      <Photo uri=''/>
     </Container>
   )
 }
