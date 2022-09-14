@@ -3,7 +3,7 @@ import { Platform, TouchableOpacity } from 'react-native';
 import ButtonBack from '../../components/ButtonBack/ButtonBack';
 import { Photo } from '../../components/Photo/Photo';
 
-import { Container, Title, Header, DeleteLabel } from './styles';
+import { Container, Title, Header, DeleteLabel, PickImageButton, UploadView } from './styles';
 
 const Product: React.FC = () => {
   return (
@@ -18,8 +18,10 @@ const Product: React.FC = () => {
           </DeleteLabel>
         </TouchableOpacity>
       </Header>
-
-      <Photo uri=''/>
+      <UploadView>
+        <Photo uri='' />
+        <PickImageButton title='Load' type='secondary' />
+      </UploadView>
     </Container>
   )
 }
