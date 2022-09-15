@@ -5,6 +5,7 @@ import { Photo } from '../../components/Photo/Photo';
 import * as ImagePicker from 'expo-image-picker';
 
 import { Container, Title, Header, DeleteLabel, PickImageButton, UploadView } from './styles';
+import { InputPrice } from '../../components/InputPrice/InputPrice';
 
 const Product: React.FC = () => {
   const [image, setImage] = useState("")
@@ -41,12 +42,15 @@ const Product: React.FC = () => {
       </Header>
       <UploadView>
         <Photo uri='' />
-        <PickImageButton 
-        title='Load' 
-        type='secondary' 
-        onPress={handlePickerPhoto}
+        <PickImageButton
+          title='Load'
+          type='secondary'
+          onPress={handlePickerPhoto}
         />
       </UploadView>
+      <InputPrice size="S" />
+      <InputPrice size="M" />
+      <InputPrice size="LG" />
     </Container>
   )
 }
