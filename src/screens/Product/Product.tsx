@@ -24,6 +24,12 @@ import { Button } from '../../components/Button/Button';
 
 const Product: React.FC = () => {
   const [image, setImage] = useState("")
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [priceSizeX, setPriceSizeX] = useState("")
+  const [priceSizeM, setPriceSizeM] = useState("")
+  const [priceSizeLG, setPriceSizeLG] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handlePickerPhoto = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -68,7 +74,10 @@ const Product: React.FC = () => {
         <Form>
           <InputGroup>
             <Label>Name</Label>
-            <Input />
+            <Input
+              onChangeText={setName}
+              value={name}
+            />
           </InputGroup>
 
           <InputGroup>
@@ -80,14 +89,28 @@ const Product: React.FC = () => {
               multiline
               maxLength={60}
               style={{ height: 80 }}
+              onChangeText={setDescription}
+              value={description}
             />
           </InputGroup>
 
           <InputGroup>
             <Label>Sizes and prices</Label>
-            <InputPrice size="S" />
-            <InputPrice size="M" />
-            <InputPrice size="LG" />
+            <InputPrice
+              size="S"
+              onChangeText={setPriceSizeX}
+              value={priceSizeX}
+            />
+            <InputPrice
+              size="M"
+              onChangeText={setPriceSizeM}
+              value={priceSizeM}
+            />
+            <InputPrice
+              size="LG"
+              onChangeText={setPriceSizeLG}
+              value={priceSizeLG}
+            />
           </InputGroup>
 
           <Button title="Add new pizza" />
