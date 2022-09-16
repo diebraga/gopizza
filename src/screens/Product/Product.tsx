@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { Alert, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import ButtonBack from '../../components/ButtonBack/ButtonBack';
 import { Photo } from '../../components/Photo/Photo';
 import * as ImagePicker from 'expo-image-picker';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 import {
   Container,
@@ -26,28 +28,73 @@ const Product: React.FC = () => {
   const [image, setImage] = useState("")
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [priceSizeX, setPriceSizeX] = useState("")
+  const [priceSizeS, setPriceSizeS] = useState("")
   const [priceSizeM, setPriceSizeM] = useState("")
   const [priceSizeLG, setPriceSizeLG] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handlePickerPhoto = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-    if (status === "granted") {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+    const { uri } = result as { uri: string }
 
-      const { uri } = result as { uri: string }
-
-      if (!result.cancelled) {
-        setImage(uri);
-      }
+    if (!result.cancelled) {
+      setImage(uri);
     }
+  }
+
+  const handleAddPizza = async () => {
+    if (!name.trim()) {
+      return Alert.alert("Add Pizza", "Give the pizza a name")
+    }
+    if (!description.trim()) {
+      return Alert.alert("Add Pizza", "Description is required")
+    }
+    if (!image) {
+      return Alert.alert("Add Pizza", "Select a image for your pizza")
+    }
+    if (!priceSizeS || !priceSizeM || !priceSizeLG) {
+      return Alert.alert("Add Pizza", "The size is required")
+    }
+
+    setIsLoading(true)
+    const fileName = new Date().getTime()
+    const reference = storage().ref(`/pizzas/${fileName}.png`)
+
+    await reference.putFile(image)
+    const photo_url = await reference.getDownloadURL()
+
+    firestore()
+      .collection('pizzas')
+      .add({
+        name,
+        name_insensitive: name.toLocaleLowerCase().trim(),
+        description,
+        price_sizes: {
+          s: priceSizeS,
+          m: priceSizeM,
+          lg: priceSizeLG,
+        },
+        photo_url,
+        photo_path: reference.fullPath
+      })
+      .then(() => {
+        setDescription("")
+        setImage("")
+        setName("")
+        setPriceSizeLG("")
+        setPriceSizeM("")
+        setPriceSizeS("")
+        return Alert.alert("Success", "A new pizza has been saved")
+      })
+      .catch(() => Alert.alert("Error in register pizza"))
+
+    setIsLoading(false)
   }
   return (
     <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
@@ -63,12 +110,14 @@ const Product: React.FC = () => {
           </TouchableOpacity>
         </Header>
         <UploadView>
-          <Photo uri='' />
+          <Photo uri={image} />
+
           <PickImageButton
             title='Load'
             type='secondary'
             onPress={handlePickerPhoto}
           />
+
         </UploadView>
 
         <Form>
@@ -98,8 +147,8 @@ const Product: React.FC = () => {
             <Label>Sizes and prices</Label>
             <InputPrice
               size="S"
-              onChangeText={setPriceSizeX}
-              value={priceSizeX}
+              onChangeText={setPriceSizeS}
+              value={priceSizeS}
             />
             <InputPrice
               size="M"
@@ -113,7 +162,10 @@ const Product: React.FC = () => {
             />
           </InputGroup>
 
-          <Button title="Add new pizza" />
+          <Button
+            title="Add new pizza"
+            onPress={handleAddPizza}
+            isLoading={isLoading} />
         </Form>
       </ScrollView>
     </Container>
