@@ -10,6 +10,7 @@ import { SignIn } from './src/screens/SignIn/SignIn';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './src/hooks/useAuth';
 import { Product } from './src/screens/Product/Product';
+import { Home } from './src/screens/Home/Home';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -46,7 +47,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style='light' translucent backgroundColor='transparent' />
         <AuthProvider>
-          <Product />
+          <Home />
         </AuthProvider>
       </ThemeProvider>
     </View>
