@@ -4,6 +4,7 @@ import { Container, Greeting, GreetingEmoji, Header, GreetingText } from './styl
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
+import { Search } from '../../components/Search/Search';
 
 export const Home: React.FC = () => {
   const { COLORS } = useTheme()
@@ -20,6 +21,7 @@ export const Home: React.FC = () => {
         </TouchableOpacity>
       </Header>
 
+      <Search onClear={() => { }} onSearch={() => { }} />
     </Container>
   )
 }

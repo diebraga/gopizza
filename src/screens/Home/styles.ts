@@ -34,3 +34,26 @@ export const GreetingText = styled.Text`
   font-family: ${p => p.theme.FONTS.TITLE};
   color: ${p => p.theme.COLORS.TITLE};
 `
+
+export const MenuHeader = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 24px 0;
+  padding-bottom: 22px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${p=> p.theme.COLORS.SHAPE};
+`
+
+export const MenuItemNumber = styled.Text`
+  font-size: 14px;
+  font-family: ${p=> p.theme.FONTS.TEXT};
+  color: ${p=>p.theme.COLORS.SECONDARY_900};
+`
+
+export const Title = styled.Text`
+  font-size: 20px;
+  line-height: 20px;
+  font-family: ${p=> p.theme.FONTS.TITLE};
+  color: ${p=>p.theme.COLORS.SECONDARY_900};
+`
