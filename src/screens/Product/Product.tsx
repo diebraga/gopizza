@@ -23,6 +23,8 @@ import {
 import { InputPrice } from '../../components/InputPrice/InputPrice';
 import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { ProductNavigationProps } from '../../@types/navigation';
 
 const Product: React.FC = () => {
   const [image, setImage] = useState("")
@@ -32,6 +34,12 @@ const Product: React.FC = () => {
   const [priceSizeM, setPriceSizeM] = useState("")
   const [priceSizeLG, setPriceSizeLG] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  const navigation = useNavigation()
+
+  const route = useRoute()
+  const { id } = route.params as ProductNavigationProps
+  console.log(id)
 
   const handlePickerPhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
