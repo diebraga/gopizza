@@ -19,6 +19,7 @@ import firestore from "@react-native-firebase/firestore"
 
 export const Home: React.FC = () => {
   const [pizzas, setPizzas] = useState<ProductType[]>([]);
+  const [search, setSearch] = useState('')
   const { COLORS } = useTheme()
 
   const fetchPizzas = (value: string) => {
@@ -46,6 +47,10 @@ export const Home: React.FC = () => {
     fetchPizzas('')
   }, [])
 
+  const handleSearch = () => {
+    fetchPizzas(search)
+  }
+
   return (
     <Container>
       <Header>
@@ -59,7 +64,15 @@ export const Home: React.FC = () => {
         </TouchableOpacity>
       </Header>
 
-      <Search onClear={() => { }} onSearch={() => { }} />
+      <Search
+        value={search}
+        onChangeText={setSearch}
+        onClear={() => {
+          fetchPizzas('')
+          setSearch("")
+        }}
+        onSearch={handleSearch}
+      />
 
       <MenuHeader>
         <Title>Menu</Title>
