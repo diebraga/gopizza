@@ -3,14 +3,12 @@ import { DMSans_400Regular } from "@expo-google-fonts/dm-sans";
 import { DMSerifDisplay_400Regular } from "@expo-google-fonts/dm-serif-display";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/theme";
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { SignIn } from './src/screens/SignIn/SignIn';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './src/hooks/useAuth';
-import { Product } from './src/screens/Product/Product';
-import { Home } from './src/screens/Home/Home';
+import { Routes } from './src/routes/index';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,7 +45,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style='light' translucent backgroundColor='transparent' />
         <AuthProvider>
-          <Home />
+          <Routes />
         </AuthProvider>
       </ThemeProvider>
     </View>
