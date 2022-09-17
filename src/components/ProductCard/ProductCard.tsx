@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components/native';
 
 import { Container, Content, Description, Details, Image, IndentificationView, Line, Name } from './styles';
 
-type ProductType = {
+export type ProductType = {
   id: string;
   photo_url: string;
   name: string;
