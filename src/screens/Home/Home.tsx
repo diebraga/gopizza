@@ -1,6 +1,15 @@
 import React from 'react';
 import HappyEmoji from "../../assets/happy.png"
-import { Container, Greeting, GreetingEmoji, Header, GreetingText } from './styles';
+import {
+  Container,
+  Greeting,
+  GreetingEmoji,
+  Header,
+  GreetingText,
+  MenuHeader,
+  Title,
+  MenuItemNumber
+} from './styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
@@ -22,6 +31,11 @@ export const Home: React.FC = () => {
       </Header>
 
       <Search onClear={() => { }} onSearch={() => { }} />
+
+      <MenuHeader>
+        <Title>Menu</Title>
+        <MenuItemNumber>12 pizzas</MenuItemNumber>
+      </MenuHeader>
     </Container>
   )
 }
