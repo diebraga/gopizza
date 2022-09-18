@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import ButtonBack from '../../components/ButtonBack/ButtonBack';
 import { Photo } from '../../components/Photo/Photo';
@@ -25,8 +25,17 @@ import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ProductNavigationProps } from '../../@types/navigation';
-
+import { ProductType } from '../../components/ProductCard/ProductCard';
+type PizzaResponse = ProductType & {
+  photo_path: string
+  price_sizes: {
+    s: string
+    m: string
+    lg: string
+  }
+}
 const Product: React.FC = () => {
+  const [photoPath, setPhotoPath] = useState("")
   const [image, setImage] = useState("")
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
@@ -39,7 +48,6 @@ const Product: React.FC = () => {
 
   const route = useRoute()
   const { id } = route.params as ProductNavigationProps
-  console.log(id)
 
   const handlePickerPhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -104,6 +112,27 @@ const Product: React.FC = () => {
 
     setIsLoading(false)
   }
+
+  useEffect(() => {
+    if (id) {
+      firestore()
+        .collection('pizzas')
+        .doc(id)
+        .get()
+        .then(res => {
+          const product = res.data() as PizzaResponse
+
+          setName(product.name)
+          setDescription(product.description)
+          setPriceSizeLG(product.price_sizes.lg)
+          setPriceSizeS(product.price_sizes.s)
+          setPriceSizeM(product.price_sizes.m)
+          setImage(product.photo_url)
+          setPhotoPath(product.photo_path)
+        })
+    }
+  }, [id])
+
   return (
     <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <ScrollView showsVerticalScrollIndicator={false} >
