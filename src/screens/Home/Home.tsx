@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import HappyEmoji from "../../assets/happy.png"
 import {
   Container,
@@ -17,7 +17,7 @@ import { Alert, FlatList, TouchableOpacity } from 'react-native';
 import { Search } from '../../components/Search/Search';
 import ProductCard, { ProductType } from '../../components/ProductCard/ProductCard';
 import firestore from "@react-native-firebase/firestore"
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 export const Home: React.FC = () => {
   const [pizzas, setPizzas] = useState<ProductType[]>([]);
@@ -47,9 +47,11 @@ export const Home: React.FC = () => {
       .catch(() => Alert.alert("Error", "Error searching item"))
   }
 
-  useEffect(() => {
-    fetchPizzas('')
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchPizzas('')
+    }, [])
+  )
 
   const handleSearch = () => {
     fetchPizzas(search)

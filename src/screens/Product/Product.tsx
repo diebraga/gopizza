@@ -117,6 +117,19 @@ const Product: React.FC = () => {
     navigation.goBack()
   }
 
+  const handleDelete = () => {
+    firestore()
+    .collection('pizzas')
+    .doc(id)
+    .delete()
+    .then(() => {
+      storage()
+      .ref(photoPath)
+      .delete()
+      .then(() => navigation.navigate("home"))
+    })
+  }
+
   useEffect(() => {
     if (id) {
       firestore()
@@ -144,7 +157,7 @@ const Product: React.FC = () => {
           <ButtonBack onPress={handleGoBack} />
           <Title>Register</Title>
           {id ?
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleDelete}>
               <DeleteLabel>
                 Delete
               </DeleteLabel>
