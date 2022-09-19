@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import HappyEmoji from "../../assets/happy.png"
 import {
   Container,
@@ -90,7 +90,7 @@ export const Home: React.FC = () => {
 
       <MenuHeader>
         <Title>Menu</Title>
-        <MenuItemNumber>12 pizzas</MenuItemNumber>
+        <MenuItemNumber>{pizzas.length} pizzas</MenuItemNumber>
       </MenuHeader>
 
       <FlatList

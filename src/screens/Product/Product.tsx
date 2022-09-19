@@ -100,17 +100,13 @@ const Product: React.FC = () => {
         photo_path: reference.fullPath
       })
       .then(() => {
-        setDescription("")
-        setImage("")
-        setName("")
-        setPriceSizeLG("")
-        setPriceSizeM("")
-        setPriceSizeS("")
-        return Alert.alert("Success", "A new pizza has been saved")
+        return navigation.navigate('home')
       })
-      .catch(() => Alert.alert("Error in register pizza"))
+      .catch(() => {
+        setIsLoading(false)
+        return Alert.alert("Error in register pizza")
+      })
 
-    setIsLoading(false)
   }
 
   const handleGoBack = () => {
