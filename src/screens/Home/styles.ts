@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import styled from 'styled-components/native';
+import { Button } from '../../components/Button/Button';
 
 export const Container = styled.View`
   flex: 1;
@@ -56,4 +57,9 @@ export const Title = styled.Text`
   line-height: 20px;
   font-family: ${p=> p.theme.FONTS.TITLE};
   color: ${p=>p.theme.COLORS.SECONDARY_900};
+`
+
+export const NewProductButton = styled(Button)`
+  margin: 0 24px;
+  margin-bottom: ${getBottomSpace() + 12}px;
 `

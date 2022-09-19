@@ -8,7 +8,8 @@ import {
   GreetingText,
   MenuHeader,
   Title,
-  MenuItemNumber
+  MenuItemNumber,
+  NewProductButton
 } from './styles';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components/native';
@@ -58,6 +59,10 @@ export const Home: React.FC = () => {
     navigation.navigate('product', { id })
   }
 
+  const handleAdd = () => {
+    navigation.navigate('product', {})
+  }
+
   return (
     <Container>
       <Header>
@@ -102,6 +107,13 @@ export const Home: React.FC = () => {
           marginHorizontal: 24,
         }}
       />
+
+      <NewProductButton
+        title='Register pizza'
+        type='secondary'
+        onPress={handleAdd}
+      />
+
     </Container>
   )
 }

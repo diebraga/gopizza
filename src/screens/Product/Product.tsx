@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { Alert, Platform, ScrollView, TouchableOpacity, View } from 'react-native';
 import ButtonBack from '../../components/ButtonBack/ButtonBack';
 import { Photo } from '../../components/Photo/Photo';
 import * as ImagePicker from 'expo-image-picker';
@@ -113,6 +113,10 @@ const Product: React.FC = () => {
     setIsLoading(false)
   }
 
+  const handleGoBack = () => {
+    navigation.goBack()
+  }
+
   useEffect(() => {
     if (id) {
       firestore()
@@ -137,24 +141,26 @@ const Product: React.FC = () => {
     <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <ScrollView showsVerticalScrollIndicator={false} >
         <Header>
-          <ButtonBack />
+          <ButtonBack onPress={handleGoBack} />
           <Title>Register</Title>
-
-          <TouchableOpacity>
-            <DeleteLabel>
-              Delete
-            </DeleteLabel>
-          </TouchableOpacity>
+          {id ?
+            <TouchableOpacity>
+              <DeleteLabel>
+                Delete
+              </DeleteLabel>
+            </TouchableOpacity>
+            : <View style={{ width: 20 }} />
+          }
         </Header>
         <UploadView>
           <Photo uri={image} />
-
-          <PickImageButton
-            title='Load'
-            type='secondary'
-            onPress={handlePickerPhoto}
-          />
-
+          {!id &&
+            <PickImageButton
+              title='Load'
+              type='secondary'
+              onPress={handlePickerPhoto}
+            />
+          }
         </UploadView>
 
         <Form>
@@ -198,11 +204,12 @@ const Product: React.FC = () => {
               value={priceSizeLG}
             />
           </InputGroup>
-
-          <Button
-            title="Add new pizza"
-            onPress={handleAddPizza}
-            isLoading={isLoading} />
+          {!id && (
+            <Button
+              title="Add new pizza"
+              onPress={handleAddPizza}
+              isLoading={isLoading} />
+          )}
         </Form>
       </ScrollView>
     </Container>
