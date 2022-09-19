@@ -46,7 +46,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style='light' translucent backgroundColor='transparent' />
         <AuthProvider>
-          <Order />
+          <Routes />
         </AuthProvider>
       </ThemeProvider>
     </View>

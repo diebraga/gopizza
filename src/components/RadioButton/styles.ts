@@ -9,7 +9,7 @@ export const Container = styled.TouchableOpacity<RadioButtonProps>`
   height: 82px;
   border-radius: 8px;
   padding: 14px 16px;
-  border: 1px solid ${p => p.selected ? p.theme.COLORS.SUCCESS_900 : p.theme.COLORS.SHAPE};
+  border: 1px solid ${({ theme, selected }) => selected ? theme.COLORS.SUCCESS_900 : theme.COLORS.SHAPE};
 `;
 
 

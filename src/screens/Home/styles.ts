@@ -43,20 +43,20 @@ export const MenuHeader = styled.View`
   margin: 25px 24px 0;
   padding-bottom: 22px;
   border-bottom-width: 1px;
-  border-bottom-color: ${p=> p.theme.COLORS.SHAPE};
+  border-bottom-color: ${p => p.theme.COLORS.SHAPE};
 `
 
 export const MenuItemNumber = styled.Text`
   font-size: 14px;
-  font-family: ${p=> p.theme.FONTS.TEXT};
-  color: ${p=>p.theme.COLORS.SECONDARY_900};
+  font-family: ${p => p.theme.FONTS.TEXT};
+  color: ${p => p.theme.COLORS.SECONDARY_900};
 `
 
 export const Title = styled.Text`
   font-size: 20px;
   line-height: 20px;
-  font-family: ${p=> p.theme.FONTS.TITLE};
-  color: ${p=>p.theme.COLORS.SECONDARY_900};
+  font-family: ${p => p.theme.FONTS.TITLE};
+  color: ${p => p.theme.COLORS.SECONDARY_900};
 `
 
 export const NewProductButton = styled(Button)`
