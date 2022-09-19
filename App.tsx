@@ -9,6 +9,7 @@ import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider } from './src/hooks/useAuth';
 import { Routes } from './src/routes/index';
+import { Order } from './src/screens/Order/Order';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,7 +46,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar style='light' translucent backgroundColor='transparent' />
         <AuthProvider>
-          <Routes />
+          <Order />
         </AuthProvider>
       </ThemeProvider>
     </View>
