@@ -1,10 +1,16 @@
 import React from 'react';
 import { View } from 'react-native';
 
-// import { Container } from './styles';
+import { Container, Header, Title } from './styles';
 
 const Orders: React.FC = () => {
-  return <View />;
+  return (
+    <Container>
+      <Header>
+        <Title>Orders Done</Title>
+      </Header>
+    </Container>
+  )
 }
 
-export default Orders;
+export { Orders };
